@@ -1,0 +1,13 @@
+.gradle/
+build/
+*.zip
+*.exe
+*.msi
+dist/
+.idea/
+*.iml
+.env
+*.class
+*.log
+.DS_Store
+bin/

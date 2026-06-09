@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Launcher logging configuration.
+
+  The launcher's working directory cannot be assumed writable (jpackage may
+  run the .exe out of Program Files or a sandboxed temp dir), so we always
+  resolve a writable absolute path before any logger is touched. Three
+  fallbacks are used in order:
+    1. JVM system property `LAUNCHER_LOG_DIR` set programmatically by Main.kt
+       (preferred — guaranteed to be %APPDATA%/NightShiftClient/logs).
+    2. The `nightshift.logDir` JVM property (set on the jpackage command
+       line as a safety net before Main runs).
+    3. The user's home directory + `.nightshift-client/logs` — last resort
+       so the launcher always has *something* to log into.
+
+  Logback evaluates the first non-null property at startup; if all three
+  are missing we still write into the home fallback.
+-->
+<configuration>
+    <property name="HOME_FALLBACK" value="${user.home}/.nightshift-client/logs"/>
+    <property name="DIR_PROP_1" value="${LAUNCHER_LOG_DIR:-${nightshift.logDir:-${HOME_FALLBACK}}}"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${DIR_PROP_1}/launcher.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${DIR_PROP_1}/launcher.%i.log</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>3</maxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>5MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+    <logger name="io.ktor" level="INFO"/>
+    <logger name="fun.nightshift" level="DEBUG"/>
+</configuration>

@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: nightshift-backend
+    env: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: DB_DRIVER
+        value: postgres
+      - key: DB_HOST
+        fromDatabase:
+          name: nightshift-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: nightshift-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: nightshift-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: nightshift-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: nightshift-db
+          property: password
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: ADMIN_TOKEN
+        value: change-me-in-production
+
+databases:
+  - name: nightshift-db
+    databaseName: nightshift
+    plan: free
