@@ -17,7 +17,8 @@ ENV DB_PORT=5432
 ENV DB_NAME=nightshift
 ENV DB_USER=nightshift
 ENV DB_PASSWORD=eRNDQBPlwLkTgRLgJSPjFr7hd2iguAmD
-ENV ADMIN_TOKEN=ns-admin-token-2026
+ENV ADMIN_TOKEN=
 ENV SESSION_SECRET=nightshift-secret-2026-key
 ENV PORT=8080
+ENV MIN_CLIENT_VERSION=0.0.0
 CMD ["./bin/launcher-backend"]
