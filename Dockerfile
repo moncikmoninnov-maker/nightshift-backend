@@ -12,5 +12,12 @@ WORKDIR /app
 COPY --from=build /app/launcher-backend/build/install/launcher-backend/ .
 EXPOSE 8080
 ENV DB_DRIVER=postgres
+ENV DB_HOST=dpg-d10r8spdbsen06u8u0ig-a.oregon-postgres.render.com
+ENV DB_PORT=5432
+ENV DB_NAME=nightshift
+ENV DB_USER=nightshift
+ENV DB_PASSWORD=eRNDQBPlwLkTgRLgJSPjFr7hd2iguAmD
+ENV ADMIN_TOKEN=ns-admin-token-2026
+ENV SESSION_SECRET=nightshift-secret-2026-key
 ENV PORT=8080
 CMD ["./bin/launcher-backend"]
