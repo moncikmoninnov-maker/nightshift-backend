@@ -72,7 +72,7 @@ fun Route.modRoutes(modsDir: Path) {
                         }
                         ActivationKeyRepository.activate(
                             keyId = key.id,
-                            accountId = java.util.UUID.randomUUID(),
+                            accountId = null,
                             hwid = req.hwid,
                             activatedAt = now,
                             expiresAt = expiresAt,

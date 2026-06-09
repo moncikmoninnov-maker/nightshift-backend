@@ -54,7 +54,7 @@ object ActivationKeyRepository {
     /** Binds the key to an account/hwid and flips its status to `active`. */
     fun activate(
         keyId: UUID,
-        accountId: UUID,
+        accountId: UUID?,
         hwid: String,
         activatedAt: Instant,
         expiresAt: Instant?,
