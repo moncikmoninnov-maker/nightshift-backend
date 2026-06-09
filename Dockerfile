@@ -3,7 +3,7 @@ WORKDIR /app
 COPY launcher-shared/ launcher-shared/
 COPY launcher-backend/ launcher-backend/
 COPY settings-docker.gradle.kts settings.gradle.kts
-COPY build.gradle.kts gradle.properties libs.versions.toml ./
+COPY build.gradle.kts gradle.properties ./
 COPY gradle/ gradle/
 RUN gradle :launcher-backend:installDist --no-daemon
 
